@@ -74,12 +74,11 @@ local message = {}; do
 end
 
 local ctx = {}; do
-	ctx.__index = ctx
 	function ctx.new(message, author)
-		local self = setmetatable({}, ctx)
-		self.message = message
-		self.author = author
-		return self
+		return {
+			message = message,
+			author = author
+		}
 	end
 end
 
@@ -120,7 +119,7 @@ local client = {}; do
 		end)
 	end
 	function client:HandleMessage(msg)
-		local player = message.author
+		local player = msg.author
 		local message = msg.content
 		if string.sub(message, 1, #self.Prefix) == self.Prefix then
 			local spaceSplits = string.split(message, " ")
