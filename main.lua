@@ -122,17 +122,20 @@ local client = {}; do
 	function client:HandleMessage(msg)
 		local player = message.author
 		local message = msg.content
-		if string.sub(message, 1, 1) == self.Prefix then
+		if string.sub(message, 1, #self.Prefix) == self.Prefix then
 			local spaceSplits = string.split(message, " ")
 			local commandName = string.sub(spaceSplits[1], #self.Prefix + 1, #spaceSplits[1])
 			local callback = self.Commands[commandName]
 			if callback then
 				local args = {}
-				for i = 2,#spaceSplits,1 do
-					local argument = spaceSplits[i]
-					args[#args + 1] = argument
+				if #spaceSplits > 1 then
+					for i = 2,#spaceSplits,1 do
+						local argument = spaceSplits[i]
+						args[#args + 1] = argument
+					end
 				end
-				callback(ctx.new(msg, player), unpack(args))
+				local ctx = ctx.new(msg, player)
+				callback(ctx, unpack(args))
 			end
 		end
 	end
