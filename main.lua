@@ -149,7 +149,11 @@ local client = {}; do
 		end
 	end
 	function client:Send(message: string)
-		game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(message)
+		if not game.ReplicatedStorage:FindFirstChild("DefaultChatSystemChatEvents") then
+			game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(message)
+		else
+			game.ReplicatedStorage.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(message, "All")	
+		end
 	end
 	function client:CreateCommand(commandName: string, callback)
 		self.Commands[commandName] = callback
