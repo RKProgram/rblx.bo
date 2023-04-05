@@ -96,10 +96,13 @@ local client = {}; do
 	client.__index = client
 	function client:Init()
 		if self.services.replicatedstorage:FindFirstChild("DefaultChatSystemChatEvents") then
+			print("Old Chat")
 			self.services.replicatedstorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(messageData)
+				print(typeof(messageData.FromSpeaker))
 				self.events.OnMessage:Fire(message.new(messageData.Message, game.Players[messageData.FromSpeaker]))
 			end)
 		else
+			print("New Chat")
 			local function onChat(author, msg)
 				self.events.OnMessage:Fire(message.new(msg, author))
 			end
@@ -163,5 +166,7 @@ end
 function rblx:CreateClient(command_prefix: string)
 	return client.new(command_prefix)
 end
+
+print("rblx.bo init..")
 
 return rblx
