@@ -171,6 +171,6 @@ function rblx:CreateClient(command_prefix: string)
 	return client.new(command_prefix)
 end
 
-print("rblx.bo init..")
+print("rblx.bo init.. v2")
 
 return rblx
