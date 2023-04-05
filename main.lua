@@ -97,7 +97,7 @@ local client = {}; do
 	function client:Init()
 		if self.services.replicatedstorage:FindFirstChild("DefaultChatSystemChatEvents") then
 			self.services.replicatedstorage.DefaultChatSystemChatEvents.OnMessageDoneFiltering.OnClientEvent:Connect(function(messageData)
-				self.events.OnMessage:Fire(message.new(messageData.Message, messageData.FromSpeaker))
+				self.events.OnMessage:Fire(message.new(messageData.Message, game.Players[messageData.FromSpeaker]))
 			end)
 		else
 			local function onChat(author, msg)
